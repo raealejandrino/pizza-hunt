@@ -38,7 +38,9 @@ const PizzaSchema = new Schema({
 
 // get total count of comments and replies on retrieval
 PizzaSchema.virtual('commentCount').get(function () {
-    return this.comments.length;
+    // return this.comments.length;
+
+    return this.comments.reduce((total, comment) => total + comment.replies.length + 1, 0);
 });
 
 // create the Pizza model using the PizzaSchema
@@ -46,3 +48,33 @@ const Pizza = model('Pizza', PizzaSchema);
 
 // export the Pizza model
 module.exports = Pizza;
+
+
+
+
+// const developers = [
+//     {
+//       name: "Eliza",
+//       experience: 7,
+//       role: "manager"
+//     },
+//     {
+//       name: "Manuel",
+//       experience: 2,
+//       role: "developer"
+//     },
+//     {
+//       name: "Kim",
+//       experience: 5,
+//       role: "developer"
+//     }
+//   ];
+  
+//   function calculateAverage(total, years, index, array) {
+//     total += years;
+//     return index === array.length-1 ? total/array.length: total
+//   }
+  
+//   const average = developers.map(dev => dev.experience).reduce(calculateAverage);
+
+// In this case, map grabs just the years of experience from each developer. Then .reduce() is used to continually add on to a value within the scope of the method known as the accumulator, then divide by the length of the entire array. The built-in .reduce() method is great for calculating a value based off of the accumulation of values in an array.
